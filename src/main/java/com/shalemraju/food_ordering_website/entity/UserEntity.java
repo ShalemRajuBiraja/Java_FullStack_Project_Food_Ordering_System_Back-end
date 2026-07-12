@@ -38,7 +38,7 @@ public class UserEntity {
     private String mobileNumber;
 
 
-    @Column(name="user",nullable = false)
+    @Column(name="role",nullable = false)
     private String role = "USER";
 
 

@@ -5,13 +5,18 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.catalina.startup.UserDatabase;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import Fullstack.Amazon_backend.entity.UserTableEntity;
+import com.shalemraju.food_ordering_website.entity.UserEntity;
+import com.shalemraju.food_ordering_website.pojo.LoginApiData;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+
+
 
 @Service
 public class JwtService {
@@ -28,7 +33,7 @@ public class JwtService {
 	
 	
 	
-    public String generateJwtToken(UserTableEntity userData) {
+    public String generateJwtToken( UserEntity userData) {
     	
     	Date tokenGeneratedTimeDate = new Date();
     	Date tokenExpirationDate = new Date(tokenGeneratedTimeDate.getTime() + 24 * 60 * 60 * 1000);

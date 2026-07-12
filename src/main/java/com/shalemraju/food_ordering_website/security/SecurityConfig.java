@@ -10,7 +10,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import Fullstack.Amazon_backend.filter.JwtRequestFilter;
+import com.shalemraju.food_ordering_website.filter.JwtRequestFilter;
+
 
 @Configuration
 @EnableWebSecurity

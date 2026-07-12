@@ -1,6 +1,5 @@
 package com.shalemraju.food_ordering_website.pojo;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -14,11 +13,11 @@ public class CreateAccountApiData {
 	    private String fullName;
 
 	    @NotBlank(message = "Email is required")
-	    @Email(regexp = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{6,}$/", message = "Enter a valid email address")
+	    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Enter a valid email address")
 	    private String email;
 
 	    @NotBlank(message = "Mobile number is required")
-	    @Pattern(regexp = "/^[0-9]{10}$/", message = "Enter 10-digit mobile number")
+	    @Pattern(regexp = "^[0-9]{10}$", message = "Enter 10-digit mobile number")
 	    private String mobileNumber;
 
 	    @NotBlank(message = "Password is required")

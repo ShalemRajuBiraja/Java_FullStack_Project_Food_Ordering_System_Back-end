@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shalemraju.food_ordering_website.dto.LoginResponseDto;
 import com.shalemraju.food_ordering_website.entity.UserEntity;
 import com.shalemraju.food_ordering_website.payload.ApiResponse;
 import com.shalemraju.food_ordering_website.pojo.CreateAccountApiData;
@@ -22,7 +23,7 @@ public class AuthController {
 	
 	
 	@PostMapping("/auth/create-account")
-	public ResponseEntity<ApiResponse<UserEntity>> login( @Valid @RequestBody CreateAccountApiData createAccountApiData) {
+	public ResponseEntity<ApiResponse<UserEntity>> createAccount( @Valid @RequestBody CreateAccountApiData createAccountApiData) throws Exception {
 		
 		authService.createAccount(createAccountApiData);
 		
@@ -33,11 +34,15 @@ public class AuthController {
 	}
 	
 	@PostMapping("/auth/login")
-	public String login( @Valid  @RequestBody  LoginApiData loginApiData) {
+	public ResponseEntity<ApiResponse<LoginResponseDto>> login( @Valid  @RequestBody  LoginApiData loginApiData) {
 		
+	LoginResponseDto serviceResponse = 	authService.login(loginApiData);
 		
-		return "Login successful";
-	}
+	ApiResponse<LoginResponseDto> response = new ApiResponse<>(true, "Login Success", serviceResponse);
+	
+	return ResponseEntity.status(HttpStatus.OK).body(response);
+	
+	}//login closed
 
 
 
