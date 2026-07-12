@@ -70,10 +70,13 @@ public class JwtService {
     	return claims;
     }
     
-    public Boolean verifyJwtToken(String token) {
-    	Claims claims = getJwtClaims(token);
-    	Boolean isValidBoolean = claims.getExpiration().after(new Date());
-    	return isValidBoolean;
+    public boolean verifyJwtToken(String token) {
+        try {
+            Claims claims = getJwtClaims(token);
+            return !claims.getExpiration().before(new Date());
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

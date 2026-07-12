@@ -37,25 +37,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             String jwtTokenString = authHeaderString.substring(7);
 
             Boolean isTokenValidBoolean = jwtService.verifyJwtToken(jwtTokenString);
-            Claims claims = jwtService.getJwtClaims(jwtTokenString);
-
-            String email = claims.getSubject();
-            String role  = claims.get("role", String.class); // ✅ Bug 2 Fixed
 
             if (isTokenValidBoolean) {
+                Claims claims = jwtService.getJwtClaims(jwtTokenString);
+                String email = claims.getSubject();
+                String role  = claims.get("role", String.class);
+
                 UserDetails userDetails = User.builder()
                         .username(email)
                         .password("")
                         .roles(role)
                         .build();
-
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails, null, userDetails.getAuthorities());
-
                 authenticationToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request));
-
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
