@@ -59,7 +59,8 @@ public class CartService {
 	    cartRepository.save(cart);
 	}// ADD TO CART METHOD CLOSED
 	
-	
+
+// GET CART ITEMS FUNCTION`	
 	  public List<CartItemResponseDto> getCartItems() {
 	        // The JwtRequestFilter puts the logged-in user's email into the
 	        // SecurityContext as the "username" (see: userDetails.username(email))
@@ -89,5 +90,28 @@ public class CartService {
 	        
 	        return cartList;
 	   }
+	  
+	 
+// DELTE FUNCTION	  
+	  		public void deleteCartItem(Long cartId, String email) {
+
+		    // Find logged-in user
+		    UserEntity user = authRepository.findByEmail(email)
+		            .orElseThrow(() -> new RuntimeException("User not found"));
+
+		    // Find cart item
+		    CartEntity cart = cartRepository.findById(cartId)
+		            .orElseThrow(() -> new RuntimeException("Cart item not found"));
+
+		    // Security check
+		    if (!cart.getUserId().equals(user.getUserId())) {
+		        throw new RuntimeException("You are not authorized to delete this cart item");
+		    }
+
+		    // Delete
+		    cartRepository.deleteById(cartId);
+		}
+	  
+	  
 
 }//final cloging
