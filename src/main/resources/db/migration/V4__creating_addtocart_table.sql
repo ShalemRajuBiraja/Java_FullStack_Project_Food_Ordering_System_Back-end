@@ -1,0 +1,21 @@
+CREATE TABLE cart_items (
+
+    cart_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+
+    user_id BIGINT NOT NULL,
+
+    food_id BIGINT NOT NULL,
+
+    food_name VARCHAR(100) NOT NULL,
+
+    price DECIMAL(10,2) NOT NULL,
+
+    quantity INT NOT NULL,
+    image_url VARCHAR(500) NOT NULL,
+
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+
+);

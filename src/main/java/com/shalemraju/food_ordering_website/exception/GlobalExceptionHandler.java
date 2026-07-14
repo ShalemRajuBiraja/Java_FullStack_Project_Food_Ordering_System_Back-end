@@ -14,6 +14,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+	
 
     // Handles @Valid failures on request DTOs (e.g. CreateAccountApiData)
     // Returns field-level error messages so the frontend can show them per-input
@@ -43,9 +44,8 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(ex.getStatusCode()).body(response);
     }
+    
 
-    // Fallback for anything unexpected — prevents raw stack traces
-    // from ever being sent back to the frontend
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Object>> handleGenericException(Exception ex) {
 
@@ -54,4 +54,7 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
+    
+    
+  
 }
