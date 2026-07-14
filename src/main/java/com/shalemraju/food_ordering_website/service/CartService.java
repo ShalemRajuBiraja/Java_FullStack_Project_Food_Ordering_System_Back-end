@@ -1,12 +1,16 @@
 package com.shalemraju.food_ordering_website.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.shalemraju.food_ordering_website.dto.CartItemResponseDto;
 import com.shalemraju.food_ordering_website.entity.CartEntity;
 import com.shalemraju.food_ordering_website.entity.UserEntity;
 import com.shalemraju.food_ordering_website.pojo.AddToCartApiData;
@@ -54,5 +58,36 @@ public class CartService {
 	    
 	    cartRepository.save(cart);
 	}// ADD TO CART METHOD CLOSED
+	
+	
+	  public List<CartItemResponseDto> getCartItems() {
+	        // The JwtRequestFilter puts the logged-in user's email into the
+	        // SecurityContext as the "username" (see: userDetails.username(email))
+	        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+	 
+	        UserEntity user = authRepository.findByEmail(email)
+	                .orElseThrow(() -> new ResponseStatusException(
+	                        HttpStatus.UNAUTHORIZED, "User not found"));
+	 
+	        List<CartEntity> cartEntities = cartRepository.findByUserId(user.getUserId());
+			
+	        List<CartItemResponseDto> cartList = new ArrayList<CartItemResponseDto>();
+	        
+	        for(CartEntity eachCart : cartEntities) {
+	        	
+	        	CartItemResponseDto cartItemResponseDto = new CartItemResponseDto();
+	        	
+	        	cartItemResponseDto.setCartId(eachCart.getCartId());
+	        	cartItemResponseDto.setFoodName(eachCart.getFoodName());
+	        	cartItemResponseDto.setPrice(eachCart.getPrice());
+	        	cartItemResponseDto.setQuantity(eachCart.getQuantity());
+	        	cartItemResponseDto.setImageUrl(eachCart.getImageUrl());
+	        	
+	        	cartList.add(cartItemResponseDto);
+	        	
+	        }
+	        
+	        return cartList;
+	   }
 
-}
+}//final cloging
