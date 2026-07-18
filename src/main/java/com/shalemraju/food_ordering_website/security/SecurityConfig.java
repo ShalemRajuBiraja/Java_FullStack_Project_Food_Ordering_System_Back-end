@@ -30,6 +30,7 @@ public class SecurityConfig {
 				                            .requestMatchers("/auth/login").permitAll()
 				                            .requestMatchers("/auth/create-account").permitAll()
 				                            .requestMatchers("/api/get/foods").permitAll()
+				                            .requestMatchers("/auth/admin/login").permitAll()
 				                            .anyRequest().authenticated() )
 		.sessionManagement( Session -> Session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) );
 		

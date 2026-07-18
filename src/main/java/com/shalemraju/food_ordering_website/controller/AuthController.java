@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.shalemraju.food_ordering_website.dto.LoginResponseDto;
 import com.shalemraju.food_ordering_website.entity.UserEntity;
 import com.shalemraju.food_ordering_website.payload.ApiResponse;
+import com.shalemraju.food_ordering_website.pojo.AdminLoginApiData;
 import com.shalemraju.food_ordering_website.pojo.CreateAccountApiData;
 import com.shalemraju.food_ordering_website.pojo.LoginApiData;
 import com.shalemraju.food_ordering_website.service.AuthService;
@@ -44,6 +45,16 @@ public class AuthController {
 	
 	}//login closed
 
+	@PostMapping("/auth/admin/login")
+	public ResponseEntity<ApiResponse<LoginResponseDto>> login( @Valid  @RequestBody  AdminLoginApiData adminLoginApiData) {
+		
+	LoginResponseDto serviceResponse = 	authService.adminLogin(adminLoginApiData);
+		
+	ApiResponse<LoginResponseDto> response = new ApiResponse<>(true, "Admin Login Success", serviceResponse);
+	
+	return ResponseEntity.status(HttpStatus.OK).body(response);
+	
+	}//login closed
 
 
 }

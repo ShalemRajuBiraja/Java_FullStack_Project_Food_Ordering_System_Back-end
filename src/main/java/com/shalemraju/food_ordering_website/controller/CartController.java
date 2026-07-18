@@ -12,15 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.service.annotation.DeleteExchange;
-
 import com.shalemraju.food_ordering_website.dto.CartItemResponseDto;
 import com.shalemraju.food_ordering_website.payload.ApiResponse;
 import com.shalemraju.food_ordering_website.pojo.AddToCartApiData;
 import com.shalemraju.food_ordering_website.service.CartService;
 import com.shalemraju.food_ordering_website.service.JwtService;
 
-import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Null;
 
@@ -45,7 +42,7 @@ import jakarta.validation.constraints.Null;
 		
 	}
 
-	 @GetMapping("/getCartIems")
+	 @GetMapping("/getCartItems")
 	    public ResponseEntity<ApiResponse<List<CartItemResponseDto>>> getCartItems() {
 	 
 	        List<CartItemResponseDto> cartItems = cartService.getCartItems();

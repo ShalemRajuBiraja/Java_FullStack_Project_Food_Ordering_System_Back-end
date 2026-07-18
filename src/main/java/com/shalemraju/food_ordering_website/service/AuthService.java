@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.shalemraju.food_ordering_website.dto.LoginResponseDto;
 import com.shalemraju.food_ordering_website.entity.UserEntity;
+import com.shalemraju.food_ordering_website.pojo.AdminLoginApiData;
 import com.shalemraju.food_ordering_website.pojo.CreateAccountApiData;
 import com.shalemraju.food_ordering_website.pojo.LoginApiData;
 import com.shalemraju.food_ordering_website.repository.AuthRepository;
@@ -74,5 +75,41 @@ public class AuthService {
 		return loginResponseDto;
 		
 	}//jogin closes
+	
+	// ADMIN LOGIN FUNCATION
+		public LoginResponseDto adminLogin( AdminLoginApiData adminLoginApiData) {
+			
+			Optional<UserEntity> ifEmailExist =	authRepository.findByEmail(adminLoginApiData.getEmail());
+			
+			if(ifEmailExist.isEmpty()) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid Credentials");
+			}
+			
+			UserEntity adminData = ifEmailExist.get();
+
+			
+			if(!adminData.getPassword().equals(adminLoginApiData.getPassword())) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid password");
+			}
+			
+			
+			if (!adminData.getRole().equals("ADMIN")) {
+			        throw new ResponseStatusException(
+			            HttpStatus.FORBIDDEN, "Access denied. Not an admin.");
+			}
+			 
+			String jwtToken = jwtService.generateJwtToken(adminData);
+			
+			Map<String, Object> response = new HashMap<>();
+			response.put("token", jwtToken);
+			response.put("adminData", adminData);
+			
+			LoginResponseDto loginResponseDto = new LoginResponseDto();
+			loginResponseDto.setUserData(adminData);
+			loginResponseDto.setToken(jwtToken);
+			
+			return loginResponseDto;
+			
+		}//jogin closes
 
 }
