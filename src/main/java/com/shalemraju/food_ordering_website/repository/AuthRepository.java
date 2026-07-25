@@ -9,7 +9,7 @@ import com.shalemraju.food_ordering_website.entity.UserEntity;
 public interface AuthRepository extends JpaRepository<UserEntity, Long> {
 	
 	Optional<UserEntity> findByEmail(String email);
-	Optional<UserEntity> findByMobile(String mobileNumber);
+	Optional<UserEntity> findByMobileNumber(String mobileNumber);
 
 
 }

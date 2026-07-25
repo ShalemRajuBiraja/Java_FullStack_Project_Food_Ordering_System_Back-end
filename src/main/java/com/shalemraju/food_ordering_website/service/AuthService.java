@@ -31,7 +31,7 @@ public class AuthService {
 	public void createAccount(CreateAccountApiData createAccountApiData) throws Exception {
 		
 	Optional<UserEntity> isEmailExists = authRepository.findByEmail(createAccountApiData.getEmail());
-	Optional<UserEntity> isMobileExists = authRepository.findByMobile(createAccountApiData.getMobileNumber());
+	Optional<UserEntity> isMobileExists = authRepository.findByMobileNumber(createAccountApiData.getMobileNumber());
 
 	if (isEmailExists.isPresent()) {
 	    throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
